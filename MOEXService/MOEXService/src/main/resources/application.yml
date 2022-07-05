@@ -1,0 +1,6 @@
+server:
+  port: 8005
+
+moex:
+  currency:
+    url: "https://iss.moex.com/iss/statistics/engines/currency/markets/selt/rates.xml"
