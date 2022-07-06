@@ -4,3 +4,8 @@ server:
 moex:
   currency:
     url: "https://iss.moex.com/iss/statistics/engines/currency/markets/selt/rates.xml"
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: "ant-path-matcher"

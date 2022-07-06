@@ -13,6 +13,17 @@ public class Currency {
     public Currency() {
     }
 
+    public Currency(String tradedate, String tradetime, String secid, String shortname, String price, String lasttoprevprice, String nominal, String decimals) {
+        this.tradedate = tradedate;
+        this.tradetime = tradetime;
+        this.secid = secid;
+        this.shortname = shortname;
+        this.price = price;
+        this.lasttoprevprice = lasttoprevprice;
+        this.nominal = nominal;
+        this.decimals = decimals;
+    }
+
     public String getTradedate() {
         return tradedate;
     }
