@@ -1,0 +1,20 @@
+spring:
+    datasource:
+        url: "jdbc:postgresql://localhost/HistoricalServiceDB"
+        username: "postgres"
+        password: "AIClab!"
+    jpa:
+        generate-ddl: true
+
+moexservice:
+    url: "http://localhost:8005/currency/getCurrency"
+    pinginterval: 10000
+    pairs:
+        - USD000UTSTOM
+        - EUR_RUB__TOM
+        - CNYRUB_TOM
+
+
+
+
+
