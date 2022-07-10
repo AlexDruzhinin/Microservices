@@ -3,9 +3,11 @@ package com.mircoservicetest.historicalservice.scheduledTasks;
 import com.mircoservicetest.historicalservice.dao.RateRepository;
 import com.mircoservicetest.historicalservice.dto.CurrencyPairsDTO;
 import com.mircoservicetest.historicalservice.model.Rate;
+import com.mircoservicetest.historicalservice.model.RatesList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -33,9 +35,11 @@ public class MoexPinger {
 
         CurrencyPairsDTO currencyPairsDTO = new CurrencyPairsDTO(); //todo consider autowired
         currencyPairsDTO.setPairs(pairs);
-
-        System.out.println(restTemplate.postForEntity(url, currencyPairsDTO, String.class));
-
+        ResponseEntity<RatesList> rateList = restTemplate.postForEntity(url, currencyPairsDTO, RatesList.class);
+        //todo should we store all currencies in one table?
+        for (Rate rate : rateList.getBody().getCurrenciesList()) {
+            rateRepository.save(rate);
+        }
     }
 
 
