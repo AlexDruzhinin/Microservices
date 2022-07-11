@@ -1,3 +1,6 @@
+server:
+    port: 8004
+
 spring:
     datasource:
         url: "jdbc:postgresql://localhost/HistoricalServiceDB"
@@ -5,6 +8,9 @@ spring:
         password: "AIClab!"
     jpa:
         generate-ddl: true
+    mvc:
+        pathmatch:
+            matching-strategy: "ant-path-matcher"
 
 moexservice:
     url: "http://localhost:8005/currency/getCurrency"
@@ -13,6 +19,17 @@ moexservice:
         - USD000UTSTOM
         - EUR_RUB__TOM
         - CNYRUB_TOM
+
+logging:
+    level:
+        org:
+            springframework:
+                web:
+                    filter:
+                        CommonsRequestLoggingFilter: "DEBUG"
+
+
+
 
 
 

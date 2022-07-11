@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Rate {
@@ -11,92 +13,35 @@ public class Rate {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     int id;
-    String tradedate;
-    String tradetime;
-    String secid;
-    String shortname;
-    String price;
-    String lasttoprevprice;
-    String nominal;
-    String decimals;
+    String name;
+    double price;
+    LocalDateTime tradeTime;
 
-    public Rate() {
+    @Override
+    public String toString() {
+        return "Rate{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", dateTime=" + tradeTime +
+                '}';
     }
 
-    public Rate(String tradedate, String tradetime, String secid, String shortname, String price, String lasttoprevprice, String nominal, String decimals) {
-        this.tradedate = tradedate;
-        this.tradetime = tradetime;
-        this.secid = secid;
-        this.shortname = shortname;
-        this.price = price;
-        this.lasttoprevprice = lasttoprevprice;
-        this.nominal = nominal;
-        this.decimals = decimals;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rate rate = (Rate) o;
+        return name.equals(rate.name) && tradeTime.equals(rate.tradeTime) && Double.compare(rate.price, price) == 0;
     }
 
-    public String getTradedate() {
-        return tradedate;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, tradeTime);
     }
 
-    public void setTradedate(String tradedate) {
-        this.tradedate = tradedate;
-    }
 
-    public String getTradetime() {
-        return tradetime;
-    }
-
-    public void setTradetime(String tradetime) {
-        this.tradetime = tradetime;
-    }
-
-    public String getSecid() {
-        return secid;
-    }
-
-    public void setSecid(String secid) {
-        this.secid = secid;
-    }
-
-    public String getShortname() {
-        return shortname;
-    }
-
-    public void setShortname(String shortname) {
-        this.shortname = shortname;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getLasttoprevprice() {
-        return lasttoprevprice;
-    }
-
-    public void setLasttoprevprice(String lasttoprevprice) {
-        this.lasttoprevprice = lasttoprevprice;
-    }
-
-    public String getNominal() {
-        return nominal;
-    }
-
-    public void setNominal(String nominal) {
-        this.nominal = nominal;
-    }
-
-    public String getDecimals() {
-        return decimals;
-    }
-
-    public void setDecimals(String decimals) {
-        this.decimals = decimals;
-    }
 
     public int getId() {
         return id;
@@ -106,8 +51,27 @@ public class Rate {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public double getPrice() {
+        return price;
+    }
 
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
+    public LocalDateTime getTradeTime() {
+        return tradeTime;
+    }
+
+    public void setTradeTime(LocalDateTime dateTime) {
+        this.tradeTime = dateTime;
+    }
 }

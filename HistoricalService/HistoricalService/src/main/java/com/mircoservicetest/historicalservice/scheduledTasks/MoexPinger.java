@@ -2,8 +2,10 @@ package com.mircoservicetest.historicalservice.scheduledTasks;
 
 import com.mircoservicetest.historicalservice.dao.RateRepository;
 import com.mircoservicetest.historicalservice.dto.CurrencyPairsDTO;
+import com.mircoservicetest.historicalservice.dto.RawMoexRate;
+import com.mircoservicetest.historicalservice.dto.RawMoexRatesList;
 import com.mircoservicetest.historicalservice.model.Rate;
-import com.mircoservicetest.historicalservice.model.RatesList;
+import com.mircoservicetest.historicalservice.util.RawMoexToRate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -12,7 +14,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -35,9 +38,10 @@ public class MoexPinger {
 
         CurrencyPairsDTO currencyPairsDTO = new CurrencyPairsDTO(); //todo consider autowired
         currencyPairsDTO.setPairs(pairs);
-        ResponseEntity<RatesList> rateList = restTemplate.postForEntity(url, currencyPairsDTO, RatesList.class);
+        ResponseEntity<RawMoexRatesList> rateList = restTemplate.postForEntity(url, currencyPairsDTO, RawMoexRatesList.class);
         //todo should we store all currencies in one table?
-        for (Rate rate : rateList.getBody().getCurrenciesList()) {
+        for (RawMoexRate rawMoexRate : rateList.getBody().getCurrenciesList()) {
+            Rate rate = RawMoexToRate.convertToRate(rawMoexRate);
             rateRepository.save(rate);
         }
     }
