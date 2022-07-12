@@ -65,12 +65,13 @@ public class MoexPinger {
     }
 
     public boolean isRateAlreadyExists(Rate newRate) {
-        Rate oldRate = rateRepository.findFirstByNameOrderByTradeTimeDesc(newRate.getName()).get(0);
-        if (oldRate != null && oldRate.equals(newRate)) {
-            System.out.println("The following Rate entry already exists: " + newRate); //todo Add logger here
-
-
-            return true;
+        List <Rate> rates = rateRepository.findFirstByNameOrderByTradeTimeDesc(newRate.getName());
+        if (rates != null && !rates.isEmpty()) {
+            Rate oldRate = rateRepository.findFirstByNameOrderByTradeTimeDesc(newRate.getName()).get(0);
+            if (oldRate != null && oldRate.equals(newRate)) {
+                System.out.println("The following Rate entry already exists: " + newRate); //todo Add logger here
+                return true;
+            }
         }
         return false;
     }
