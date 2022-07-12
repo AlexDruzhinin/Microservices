@@ -1,13 +1,11 @@
 package com.mircoservicetest.historicalservice.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(name = "UniqueNameAndTime", columnNames = { "name", "tradeTime" }) })
 public class Rate {
 
     @Id

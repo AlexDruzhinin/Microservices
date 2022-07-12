@@ -14,8 +14,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -26,6 +24,7 @@ public class MoexPinger {
     private RateRepository rateRepository;
     private List<String> pairs;
     private String url;
+
 
     @Autowired
     public MoexPinger(RateRepository rateRepository, RestTemplateBuilder builder) {
@@ -42,7 +41,9 @@ public class MoexPinger {
         //todo should we store all currencies in one table?
         for (RawMoexRate rawMoexRate : rateList.getBody().getCurrenciesList()) {
             Rate rate = RawMoexToRate.convertToRate(rawMoexRate);
-            rateRepository.save(rate);
+            if (!isRateAlreadyExists(rate)) { //to avoid duplicates
+                rateRepository.save(rate);
+            }
         }
     }
 
@@ -61,6 +62,17 @@ public class MoexPinger {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isRateAlreadyExists(Rate newRate) {
+        Rate oldRate = rateRepository.findFirstByNameOrderByTradeTimeDesc(newRate.getName()).get(0);
+        if (oldRate != null && oldRate.equals(newRate)) {
+            System.out.println("The following Rate entry already exists: " + newRate); //todo Add logger here
+
+
+            return true;
+        }
+        return false;
     }
 
 }

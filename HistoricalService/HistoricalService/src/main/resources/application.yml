@@ -14,7 +14,7 @@ spring:
 
 moexservice:
     url: "http://localhost:8005/currency/getCurrency"
-    pinginterval: 10000
+    pinginterval: 60000
     pairs:
         - USD000UTSTOM
         - EUR_RUB__TOM

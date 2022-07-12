@@ -2,15 +2,12 @@ package com.mircoservicetest.historicalservice.controller;
 
 import com.mircoservicetest.historicalservice.dao.RateRepository;
 import com.mircoservicetest.historicalservice.model.Rate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -25,8 +22,6 @@ public class RatesController {
 
     @PostMapping("getLast")
     public Rate getLastValue(@RequestBody String currencyName) {
-        //System.out.println("Check controller. Line: " + currencyName);
-        //System.out.println("Check controller. Object: " + rateRepository.getLastRate("currencyName").toString());
         List<Rate> rateList= rateRepository.findFirstByNameOrderByTradeTimeDesc(currencyName);
         if (rateList != null && rateList.size() > 0) {
             return rateList.get(0);
@@ -49,6 +44,6 @@ public class RatesController {
             return rateList;
         }
         return null;
-    }//, String )
+    }
 
 }
