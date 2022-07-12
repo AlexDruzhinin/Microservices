@@ -1,0 +1,8 @@
+historicalservice:
+  rateurl: "http://localhost:8004/rate/getLast"
+  periodurl: "http://localhost:8004/rate/getPeriod"
+
+logging:
+  level:
+    org:
+      springframework: debug
