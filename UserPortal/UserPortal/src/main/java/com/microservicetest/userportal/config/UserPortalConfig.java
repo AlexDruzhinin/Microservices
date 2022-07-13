@@ -1,12 +1,14 @@
 package com.microservicetest.userportal.config;
 
 import com.microservicetest.userportal.dto.UserHandshakeHandler;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.*;
 
 @Configuration
 @EnableWebSocketMessageBroker
+@ComponentScan
 public class UserPortalConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
