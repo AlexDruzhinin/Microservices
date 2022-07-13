@@ -1,0 +1,7 @@
+telegram:
+  api-url: "https://api.telegram.org/"
+  webhook-path: ""
+  bot-name: ""
+  bot-token: ""
+
+system:
