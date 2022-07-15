@@ -1,7 +1,12 @@
+historicalservice:
+  serviceurl: "http://localhost:8004"
+  rateurl: "/rate/getLast"
+
+server:
+  port: 8002
+
 telegram:
   api-url: "https://api.telegram.org/"
-  webhook-path: ""
-  bot-name: ""
-  bot-token: ""
-
-system:
+  bot-name: "@aic_demo_test_bot"
+  bot-token: "5275031582:AAF41lphRUsZbYcwrZBc0bVR_b6QpOTLDpw"
+  webHookPath: "https://7baa-93-120-179-94.eu.ngrok.io"
