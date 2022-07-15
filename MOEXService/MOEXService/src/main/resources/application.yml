@@ -17,3 +17,6 @@ logging:
                 web:
                     filter:
                         CommonsRequestLoggingFilter: "DEBUG"
+
+app:
+  generateData: true
