@@ -4,7 +4,6 @@ public enum ButtonNameEnum {
     GET_USD("USD"),
     GET_EUR("EUR"),
     GET_CNY("CNY");
-
     private final String buttonName;
 
     ButtonNameEnum(String buttonName) {

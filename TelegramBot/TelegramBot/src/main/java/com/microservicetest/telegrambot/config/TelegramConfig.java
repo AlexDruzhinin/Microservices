@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TelegramConfig {
+
+    @Value("${telegram.api-url}")
+    private String apiURL;
     @Value("${telegram.webhook-path}")
     private String webhookPath;
     @Value("${telegram.bot-name}")
@@ -34,5 +37,14 @@ public class TelegramConfig {
 
     public void setBotToken(String botToken) {
         this.botToken = botToken;
+    }
+
+
+    public String getApiURL() {
+        return apiURL;
+    }
+
+    public void setApiURL(String apiURL) {
+        this.apiURL = apiURL;
     }
 }

@@ -1,6 +1,6 @@
 package com.microservicetest.telegrambot.controller;
 
-import com.microservicetest.telegrambot.bot.WriteReadBot;
+import com.microservicetest.telegrambot.bot.TelegramBot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,15 +10,15 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 @RestController
 public class WebhookController {
-    private final WriteReadBot writeReadBot;
+    private final TelegramBot telegramBot;
 
     @Autowired
-    public WebhookController(WriteReadBot writeReadBot) {
-        this.writeReadBot = writeReadBot;
+    public WebhookController(TelegramBot telegramBot) {
+        this.telegramBot = telegramBot;
     }
 
     @PostMapping("/")
     public BotApiMethod<?> onUpdateReceived(@RequestBody Update update) {
-        return writeReadBot.onWebhookUpdateReceived(update);
+        return telegramBot.onWebhookUpdateReceived(update);
     }
 }

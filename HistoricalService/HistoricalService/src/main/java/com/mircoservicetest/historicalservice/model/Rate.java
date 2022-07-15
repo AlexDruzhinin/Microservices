@@ -7,7 +7,6 @@ import java.util.Objects;
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(name = "UniqueNameAndTime", columnNames = { "name", "tradeTime" }) })
 public class Rate {
-
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     int id;
@@ -25,7 +24,6 @@ public class Rate {
                 '}';
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -38,8 +36,6 @@ public class Rate {
     public int hashCode() {
         return Objects.hash(id, name, price, tradeTime);
     }
-
-
 
     public int getId() {
         return id;
