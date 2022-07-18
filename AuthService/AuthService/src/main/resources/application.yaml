@@ -1,0 +1,12 @@
+server:
+  port: 8001
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost/AuthServiceDB"
+    username: "postgres"
+    password: "AIClab!"
+
+  jpa:
+    generate-ddl: true
+    show-sql=true:
