@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="module" src="/webjars/stomp-websocket/2.3.4/stomp.js"></script>
+    <script type="module" src="/webjars/sockjs-client/1.5.1/sockjs.js"></script>
+    <script type="module" src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+    <script type="module" src="../JS/app.js"></script>
+</head>
+<body>
+<div>
+    <div>
+        <p id="user">
+        </p>
+        <button id="logout" class="btn btn-primary">Logout</button>
+        <p>
+            Currency type
+        </p>
+        <select id="CurrencyType">
+            <option selected value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="CNY">CNY</option>
+        </select>
+    </div>
+    <div>
+        <p>
+            Start date
+        </p>
+        <input id="StartDate" type="text" value="2022-07-11T14:30:00">
+    </div>
+    <div>
+        <p>
+            Stop date
+        </p>
+        <input id="StopDate" type="text" value="2022-07-11T16:30:00">
+    </div>
+    <div>
+        <button id="send">Request</button>
+    </div>
+</div>
+
+<div id="result">
+
+</div>
+</body>
+</html>

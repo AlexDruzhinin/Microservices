@@ -7,3 +7,12 @@ logging:
   level:
     org:
       springframework: info
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: 356953213549-5q07imfl0cd7u3ml2i3v457eocg77ikt.apps.googleusercontent.com
+            clientSecret: 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
