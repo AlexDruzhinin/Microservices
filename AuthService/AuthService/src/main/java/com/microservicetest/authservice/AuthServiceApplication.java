@@ -1,8 +1,5 @@
-package com.example.authservice;
+package com.microservicetest.authservice;
 
-import com.example.authservice.dao.UsersRepository;
-import com.example.authservice.model.Users;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
