@@ -1,29 +1,33 @@
-package com.example.authservice.model;
+package com.microservicetest.authservice.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
-public class Users {
+@Table(name="users")
+public class User {
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private long id;
     String userName;
+
     String password;
     boolean enabled;
     LocalDateTime lastLoginTime;
     LocalDateTime lastAttemptTime;
     int failedLoginAttempt;
 
-    public Users() {
+    public User() {
+        roles = new ArrayList<Role>();
     }
 
-    public Users(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-        enabled = true;
-    }
-
-
+    @ManyToMany
+    @JoinTable(name="users_roles",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles;
 
     public String getUserName() {
         return userName;
@@ -72,4 +76,20 @@ public class Users {
     public void setFailedLoginAttempt(int failedLoginAttempt) {
         this.failedLoginAttempt = failedLoginAttempt;
     }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
 }
