@@ -1,0 +1,1 @@
+docker run --name HistoricalServiceDB --network msvc-network -e POSTGRES_PASSWORD=AIClab! -e POSTGRES_DB=HistoricalServiceDB -d postgres:14

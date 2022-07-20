@@ -1,0 +1,1 @@
+docker run --name historicalservice --network msvc-network historicalservice

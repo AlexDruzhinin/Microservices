@@ -1,0 +1,18 @@
+#
+# Build stage
+#
+FROM maven:3-openjdk-17-slim AS build
+COPY src /home/app/src
+COPY pom.xml /home/app
+ENV MOEX_SERVICE_PATH moexservice
+ENV HISTORICAL_SERVICE_DB_PATH historicalservicedb
+RUN mvn -f /home/app/pom.xml package -Dmaven.test.skip spring-boot:repackage
+
+#
+# Package stage
+#
+FROM bellsoft/liberica-openjre-alpine:17
+COPY --from=build /home/app/target/HistoricalService-0.0.1-SNAPSHOT.jar /usr/local/lib/HistoricalService.jar
+ENV MOEX_SERVICE_PATH moexservice
+ENV HISTORICAL_SERVICE_DB_PATH historicalservicedb
+ENTRYPOINT ["java","-jar","/usr/local/lib/HistoricalService.jar"]

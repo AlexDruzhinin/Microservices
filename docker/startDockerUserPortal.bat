@@ -1,0 +1,1 @@
+docker run --name userportal -p 8080:8080 --network msvc-network userportal

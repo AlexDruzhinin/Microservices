@@ -1,0 +1,1 @@
+docker run --name moexservice --network msvc-network moexservice
