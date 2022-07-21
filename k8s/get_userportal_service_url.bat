@@ -1,0 +1,1 @@
+minikube service userportal --url -n default

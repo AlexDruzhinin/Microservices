@@ -1,0 +1,1 @@
+minikube service historical --url -n default

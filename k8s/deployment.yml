@@ -3,9 +3,9 @@ kind: ConfigMap
 metadata:
   name: urls-config
 data:
-  MOEX_SERVICE_PATH: "moexservice"
-  HISTORICAL_SERVICE_DB_PATH: "historicalservicedb"
-  HISTORICAL_SERVICE_PATH: "historicalservice"
+  MOEX_SERVICE_PATH: "moex"
+  HISTORICAL_SERVICE_DB_PATH: "historicaldb"
+  HISTORICAL_SERVICE_PATH: "historical"
 
 ---
 
@@ -27,13 +27,12 @@ metadata:
   name: moex
 spec:
   ports:
-    - nodePort: 30500
-      port: 8005
+    - port: 8005
       protocol: TCP
       targetPort: 8005
   selector:
     tier: moex
-  type: NodePort
+
 
 ---
 
@@ -77,3 +76,172 @@ spec:
               cpu: "50m"
 
 ---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    tier: historicaldb
+  name: historicaldb
+spec:
+  ports:
+    - port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    tier: historicaldb
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: historicaldb
+  labels:
+    tier: historicaldb
+    app: microservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: historicaldb
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        tier: historicaldb
+    spec:
+      containers:
+        - name: historicaldb
+          image: ragnamir88/testmicroservice:historicalservicedb
+          envFrom:
+            - configMapRef:
+                name: urls-config
+          ports:
+            - containerPort: 5432
+              protocol: TCP
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+            requests:
+              memory: "128Mi"
+              cpu: "50m"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    tier: historical
+  name: historical
+spec:
+  ports:
+    - port: 8004
+      protocol: TCP
+      targetPort: 8004
+  selector:
+    tier: historical
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: historical
+  labels:
+    tier: historical
+    app: microservices
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: historical
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        tier: historical
+    spec:
+      containers:
+        - name: historical
+          image: ragnamir88/testmicroservice:historicalservice
+          envFrom:
+            - configMapRef:
+                name: urls-config
+          ports:
+            - containerPort: 8004
+              protocol: TCP
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+            requests:
+              memory: "128Mi"
+              cpu: "50m"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    tier: userportal
+  name: userportal
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    tier: userportal
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userportal
+  labels:
+    tier: userportal
+    app: microservices
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      tier: userportal
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        tier: userportal
+    spec:
+      containers:
+        - name: userportal
+          image: ragnamir88/testmicroservice:userportal
+          envFrom:
+            - configMapRef:
+                name: urls-config
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+            requests:
+              memory: "128Mi"
+              cpu: "50m"

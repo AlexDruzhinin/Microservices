@@ -1,0 +1,4 @@
+docker push ragnamir88/testmicroservice:historicalservicedb
+docker push ragnamir88/testmicroservice:moexservice
+docker push ragnamir88/testmicroservice:historicalservice
+docker push ragnamir88/testmicroservice:userportal

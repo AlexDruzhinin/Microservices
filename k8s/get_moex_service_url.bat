@@ -1,0 +1,1 @@
+minikube service moex --url -n default
