@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: urls-config
+data:
+  MOEX_SERVICE_PATH: "moexservice"
+  HISTORICAL_SERVICE_DB_PATH: "historicalservicedb"
+  HISTORICAL_SERVICE_PATH: "historicalservice"
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: msvc-secret
+type: Opaque
+stringData:
+  secret: secret
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    tier: moex
+  name: moex
+spec:
+  ports:
+    - nodePort: 30500
+      port: 8005
+      protocol: TCP
+      targetPort: 8005
+  selector:
+    tier: moex
+  type: NodePort
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moex
+  labels:
+    tier: moex
+    app: microservices
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      tier: moex
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        tier: moex
+    spec:
+      containers:
+        - name: moex
+          image: ragnamir88/testmicroservice:moexservice
+          envFrom:
+            - configMapRef:
+                name: urls-config
+          ports:
+            - containerPort: 8005
+              protocol: TCP
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+            requests:
+              memory: "128Mi"
+              cpu: "50m"
+
+---

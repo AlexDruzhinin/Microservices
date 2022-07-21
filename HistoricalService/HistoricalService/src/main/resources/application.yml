@@ -3,17 +3,18 @@ server:
 
 spring:
     datasource:
-        url: "jdbc:postgresql://localhost/HistoricalServiceDB"
+        url: "jdbc:postgresql://${HISTORICAL_SERVICE_DB_PATH}/HistoricalServiceDB"
         username: "postgres"
         password: "AIClab!"
     jpa:
         generate-ddl: true
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
     mvc:
         pathmatch:
             matching-strategy: "ant-path-matcher"
 
 moexservice:
-    url: "http://localhost:8005/currency/getCurrency"
+    url: "http://${MOEX_SERVICE_PATH}:8005/currency/getCurrency"
     pinginterval: 60000
     pairs:
         - USD000UTSTOM

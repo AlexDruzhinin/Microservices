@@ -1,5 +1,5 @@
 historicalservice:
-  serviceurl: "http://localhost:8004"
+  serviceurl: "http://${HISTORICAL_SERVICE_PATH}:8004"
   rateurl: "/rate/getLast"
   periodurl: "/rate/getPeriod"
 
